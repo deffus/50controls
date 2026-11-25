@@ -1,95 +1,109 @@
-### Cyber Assurance — Docker package
+# Cybersecurity Assurance Checklist
 
-This package repairs dependency installation, generated database-client placement, container build output and one-off initialization. Use these instructions instead of the older deployment guide. Full container build/runtime testing is not available in the packaging workspace; see `PACKAGE_CHECKS.txt` in the downloadable archive for the exact checks completed.
+A portable web application for managing a 50-control cybersecurity baseline assurance checklist with scoring, action tracking, email reminders and reporting.
 
-#### 1. Replace files safely on your Mac
+## Features
 
-Quit any running development process. Back up your existing application folder and database before changing an installation containing real data. Extract the new ZIP, then copy its contents over the files in your existing `cyber_assurance_app` folder. Keep the same folder name and any existing Compose project name so Docker continues using the same database volume.
+- **50 pre-loaded controls** across 10 security domains with evidence requirements, test procedures and pass criteria
+- **Multiple reviews** — track assessments over time; copy forward from a previous review without overwriting history
+- **Scoring** — 0–4 maturity scale; coverage and verified-effectiveness metrics calculated automatically
+- **Action tracker** — remediation actions with owner, due date, status, overdue alerts
+- **Dashboard** — KPIs, domain breakdown, state distribution, progress trends
+- **User management** — Admin / Assessor / Viewer roles; first registered user becomes Admin
+- **Email reminders** — daily digest of overdue and due-soon actions
+- **Calendar export** — .ics download of action due dates
+- **CSV export** — download review data for offline analysis
+- **Dark mode** by default, with a persistent light-mode toggle
 
-The ZIP does not contain `.env`. **Keep your existing `.env` and database password.** Do not delete volumes, run `down -v`, or run initialization with reset/accept-data-loss flags. No hosted credentials or assessment records are included.
-
-#### 2. Configure the environment
-
-Open a terminal in that application folder. Docker Desktop must be running. You do not need Node.js or Yarn installed on your Mac; the containers provide them.
-
-Only for a fresh installation without an `.env` file:
+## Quick Start with Docker Compose
 
 ```bash
+# 1. Clone the repository
+git clone <your-repo-url> cyber-assurance
+cd cyber-assurance
+
+# 2. Copy and edit environment variables
 cp .env.example .env
-```
+# Edit .env — at minimum set NEXTAUTH_SECRET to a random string:
+#   openssl rand -base64 32
 
-In your local editor, fill in `DB_PASSWORD` and `NEXTAUTH_SECRET` with different long random values from a password manager. Use a hexadecimal value for the database password to avoid URL-encoding problems. Set `NEXTAUTH_URL=http://localhost:3000`.
-
-For an existing installation, preserve those existing values. Compose sets the other connection/authentication variables inside the containers. It deliberately ignores any old hosted `DATABASE_URL` in your local `.env`.
-
-Do not share `.env`, commit it, or put secret values into terminal commands. The file is excluded from both the ZIP and Docker build context. Container environment variables remain visible to administrators of Docker on your machine.
-
-Check the configuration without printing resolved secrets:
-
-```bash
+# 3. Validate the configuration without displaying its secrets:
 docker compose config --quiet
-```
 
-#### 3. Build the app and initialization images
-
-```bash
+# 4. Build the image
 docker compose --profile setup --progress=plain build app init > build.log 2>&1
-```
+#    This builds the application and a separate database-initialization image. Output goes to build.log, so the terminal may appear quiet while it runs.
+#.   Continue only if the build succeeds. If it fails, upload build.log after checking it contains no credentials.
 
-The image uses Node.js 22 and the image's Yarn Classic. It permits lockfile resolution instead of enforcing the incompatible exported baseline. Your original lockfile on disk is not changed by this container install. This does not promise reproducible transitive dependency resolution across future rebuilds.
-
-If the build fails, stop and share the redacted `build.log`. Do not ignore dependency-engine checks. On success, continue below.
-
-#### 4. Start the database and initialize once
-
-```bash
+# 5. Start the database
 docker compose up -d db
+docker compose ps
+#.   Docker creates the database and a persistent storage volume. The database may initially show health: starting; the next command waits for it to become healthy.
+
+# 6. Create the tables and load the controls
 docker compose --profile setup run --rm init
-```
+#    If initialisation fails or warns about data loss, stop—do not use reset or data-loss override flags.
 
-The initialization container waits for the database health check. It creates missing schema objects without destructive override flags and inserts missing control definitions. Existing definitions, users and assessments are not reset by the seed. If schema initialization warns about data loss or fails, stop rather than overriding it.
-
-This command is restricted to the Compose database service and cannot use the hosted database address. It does not run automatically each time the app starts. No shared administrator account is created.
-
-#### 5. Start and open the app
-
-```bash
+# 7. Start the application
 docker compose up -d app
 docker compose ps
+
+#    On the same computer running Docker, open:
+
+http://localhost:3000
+
+#    Register your own account using the signup link. The first registered account in a fresh database becomes administrator. You can then open User Management to create additional users and assign their access.
+
+# Later: start, stop and troubleshoot
+# To stop the app and database without deleting their stored data:
+docker compose stop
+
+# To start them again:
+docker compose up -d db app
+
+# You do not need to repeat initialization for normal restarts.
+
+# If startup fails, inspect recent logs:
+docker compose logs --tail=100 app db
+
+# Never run docker compose down -v or delete the database volume unless you deliberately intend to erase its data. Keep the same folder/project name and database password. Email reminders are not configured by these steps.
 ```
 
-Open **http://localhost:3000 on your Mac**. On a fresh database, use **Create one** to register your own account before giving anyone else access; the first account becomes administrator. If your local database already contains users, use an existing administrator account. Do not delete users to force administrator assignment.
+## Running Locally (without Docker)-NOT TESTED
 
-The app is bound to `127.0.0.1`, so other computers cannot access it by default. The database has no host-published port. This is a local evaluation package, not a claim that production security has been audited.
+```bash
+# Prerequisites: Node.js 20+, PostgreSQL
 
-#### 6. Confirm persistence and roles
+# 1. Install dependencies
+yarn install
 
-Create a review, confirm the 50 controls are available, edit and save a check, then reload it. Create an action, export the review and calendar, and verify the files open. Sign out and back in. Restart the app with `docker compose restart app` and confirm your saved work remains. Test Viewer restrictions before inviting a team.
+# 2. Configure environment
+cp .env.example .env
+# Edit .env with your PostgreSQL connection string and a random NEXTAUTH_SECRET
 
-#### Existing data and backups
+# 3. Set up the database
+npx prisma generate
+npx prisma db push
+yarn prisma db seed
 
-The Docker volume stores the database separately from the app container. Rebuilding the app does not itself delete that volume. Keep the original folder/project name and database password. Never use `docker compose down -v` or volume-pruning commands on an installation containing data. A source ZIP or review CSV is not a full database backup; arrange and test database backups before operational use.
+# 4. Start the dev server
+yarn dev
+```
 
-#### Scope and remaining limitations
 
-Email delivery and scheduling are not enabled by this package. The existing reminder endpoint requires access-control and delivery-handling work before enabling external access or scheduled execution. No Slack or Teams integration has been added.
+## Scoring Model
 
-Do not expose this local package to the internet or a wider team without a separate security review, encrypted transport, registration/access controls and backup procedures. The prior embedded hosted-preview issue is not addressed by this packaging change. The hosted application's database is not read or changed by the package preparation.
+| Completion State | Score |
+|---|---|
+| Not implemented / Planned / Ineffective | 0 |
+| Partially implemented | 1 |
+| Implemented – unverified | 2 |
+| Partially effective | 3 |
+| Effective | 4 |
+| Not assessed / Not applicable | Excluded |
 
-#### Packaging implementation
+**Scored maturity** = achieved points ÷ (4 × assessed applicable controls)
 
-The managed schema is preserved unchanged. Generation runs at its configured location, then a container-only script copies the generated artifacts into the dependency directory used by later stages and confirms that the models can be imported. A separate container configuration fixes build-output tracing to `/app` and enables standalone output. The Docker build checks that both the server entrypoint and generated database client exist before creating the runtime image.
+## Daily Reminders
 
-A separate `init` image contains the tooling, seed scripts and control data; the runtime image runs as an unprivileged user. Environment files, host dependency folders, caches and logs are excluded from the build context.
-
-#### User access and password resets
-
-Sign in as an administrator and open **User Management** in the sidebar. Use **Create user** to enter a name, email, access level and initial password. New accounts default to Viewer. **Edit** changes a user's name, email and role. Admin manages users and assurance work; Assessor edits reviews/checks/actions; Viewer reads information and is not a disabled account. You cannot remove your own administrator access.
-
-For a forgotten password, select **Reset password** next to that user. Enter and confirm a password of at least 12 characters (maximum 72 bytes), then save. Share it through your approved secure credential-sharing channel. No email is sent and no self-service email recovery is configured. Existing sessions are rejected on their next request, and the old password no longer works. Resetting your own password signs you out. These are administrator-set passwords, not automatically expiring temporary passwords.
-
-Keep a second trusted administrator for recovery. If you cannot sign in, ask another administrator to reset your password. If no administrator can sign in, account recovery requires a separate local administrative recovery procedure; do not rerun the seed, reset the database or delete users.
-
-After installing this user-management update, existing sessions require a fresh sign-in. Role changes are enforced on the next authenticated request; users can reload their page to refresh visible controls.
-
-For an existing Docker installation, retain the same application folder/project name, `.env` and database volume. After replacing the source files, rebuild with `docker compose build app` and restart with `docker compose up -d app`. No schema migration or initialization command is needed for this user-management update. Do not use `down -v`.
+Call `POST /api/reminders` daily (e.g. via cron, or a scheduled task) to generate in-app notifications and send email reminders for overdue and due-soon actions.
