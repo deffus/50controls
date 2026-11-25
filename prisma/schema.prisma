@@ -1,0 +1,195 @@
+generator client {
+    provider = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+    output = "/home/ubuntu/cyber_assurance_app/nextjs_space/node_modules/.prisma/client"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  ASSESSOR
+  VIEWER
+}
+
+enum CompletionState {
+  NOT_ASSESSED
+  NOT_IMPLEMENTED
+  PLANNED
+  PARTIALLY_IMPLEMENTED
+  IMPLEMENTED_UNVERIFIED
+  PARTIALLY_EFFECTIVE
+  EFFECTIVE
+  INEFFECTIVE
+  NOT_APPLICABLE
+}
+
+enum ActionStatus {
+  OPEN
+  IN_PROGRESS
+  CLOSED
+  CANCELLED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String
+  role          Role      @default(VIEWER)
+  themePref     String    @default("dark")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+  reviews       Review[]
+  assessments   ControlAssessment[]
+  ownedActions  Action[]  @relation("ActionOwner")
+  notifications Notification[]
+
+  @@index([email])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model ControlDefinition {
+  id             String   @id @default(cuid())
+  controlId      String   @unique
+  domain         String
+  controlName    String
+  question       String   @db.Text
+  evidenceReqs   String   @db.Text
+  testProcedure  String   @db.Text
+  passCriteria   String   @db.Text
+  sortOrder      Int      @default(0)
+  createdAt      DateTime @default(now())
+
+  assessments    ControlAssessment[]
+
+  @@index([domain])
+  @@index([controlId])
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  name        String
+  reviewDate  DateTime
+  description String?  @db.Text
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  createdBy   User               @relation(fields: [createdById], references: [id])
+  assessments ControlAssessment[]
+  actions     Action[]
+
+  @@index([createdById])
+  @@index([reviewDate])
+}
+
+model ControlAssessment {
+  id                String          @id @default(cuid())
+  reviewId          String
+  controlDefId      String
+  completionState   CompletionState @default(NOT_ASSESSED)
+  score             Int?            
+  scope             String?         @db.Text
+  controlOwner      String?
+  assessor          String?
+  findings          String?         @db.Text
+  evidenceRefs      String?         @db.Text
+  testDate          DateTime?
+  naApproval        String?         @db.Text
+  assessedById      String?
+  updatedAt         DateTime        @updatedAt
+
+  review       Review            @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  controlDef   ControlDefinition @relation(fields: [controlDefId], references: [id])
+  assessedBy   User?             @relation(fields: [assessedById], references: [id])
+
+  @@unique([reviewId, controlDefId])
+  @@index([reviewId])
+  @@index([controlDefId])
+  @@index([assessedById])
+  @@index([completionState])
+}
+
+model Action {
+  id            String       @id @default(cuid())
+  reviewId      String
+  controlDefId  String?
+  description   String       @db.Text
+  ownerId       String?
+  dueDate       DateTime?
+  closedDate    DateTime?
+  status        ActionStatus @default(OPEN)
+  notes         String?      @db.Text
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  review    Review  @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  owner     User?   @relation("ActionOwner", fields: [ownerId], references: [id])
+
+  @@index([reviewId])
+  @@index([ownerId])
+  @@index([status])
+  @@index([dueDate])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  link      String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([read])
+  @@index([createdAt])
+}

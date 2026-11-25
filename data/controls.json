@@ -1,0 +1,452 @@
+[
+  {
+    "controlId": "CYB-001",
+    "domain": "Governance and accountability",
+    "controlName": "Security ownership",
+    "question": "Is a named person or team accountable for cybersecurity, with responsibilities understood across the organisation?",
+    "evidenceReqs": "Approved responsibility matrix; role descriptions; management appointment.",
+    "testProcedure": "Confirm accountable ownership and interview relevant staff to verify responsibilities are understood.",
+    "passCriteria": "Accountability is formally assigned and relevant staff can explain their responsibilities."
+  },
+  {
+    "controlId": "CYB-002",
+    "domain": "Governance and accountability",
+    "controlName": "Security policies",
+    "question": "Are security policies approved, communicated, reviewed regularly and updated when significant changes occur?",
+    "evidenceReqs": "Approved policies; review schedule; version history; communication records.",
+    "testProcedure": "Check approval and review dates against policy requirements; sample evidence of communication.",
+    "passCriteria": "Policies are approved, current under the defined review cycle and communicated to relevant personnel."
+  },
+  {
+    "controlId": "CYB-003",
+    "domain": "Governance and accountability",
+    "controlName": "Risk assessment",
+    "question": "Does the organisation identify, assess, document and periodically review its cybersecurity risks?",
+    "evidenceReqs": "Risk methodology; current risk register; assessment and review records.",
+    "testProcedure": "Inspect coverage of important systems and threats; verify reviews follow the defined schedule.",
+    "passCriteria": "Documented assessments cover important assets and are reviewed at the defined frequency and after significant changes."
+  },
+  {
+    "controlId": "CYB-004",
+    "domain": "Governance and accountability",
+    "controlName": "Risk treatment",
+    "question": "Are significant risks assigned owners and tracked through mitigation, acceptance, transfer or avoidance?",
+    "evidenceReqs": "Risk treatment plan; assigned owners; risk acceptance approvals; action tracking.",
+    "testProcedure": "Sample significant risks and trace treatment decisions, ownership and action status.",
+    "passCriteria": "Significant risks have authorised treatment decisions, accountable owners and tracked actions."
+  },
+  {
+    "controlId": "CYB-005",
+    "domain": "Governance and accountability",
+    "controlName": "Exceptions",
+    "question": "Are security exceptions documented, approved by an authorised person, time-limited and reviewed?",
+    "evidenceReqs": "Exception register; approvals; expiry dates; compensating controls; review records.",
+    "testProcedure": "Sample exceptions and verify authorisation, expiry and reviews.",
+    "passCriteria": "Exceptions have documented justification, approval, expiry and required compensating controls; expired exceptions are resolved or reapproved."
+  },
+  {
+    "controlId": "CYB-006",
+    "domain": "Asset and data management",
+    "controlName": "Asset inventory",
+    "question": "Is there an up-to-date inventory of devices, servers, applications, cloud services and other systems that store, process or access organisational data?",
+    "evidenceReqs": "Asset inventory; discovery exports; cloud and software inventories; reconciliation records.",
+    "testProcedure": "Reconcile inventory against discovery and management sources; investigate unmatched assets.",
+    "passCriteria": "In-scope assets are recorded and discrepancies are resolved through an operating reconciliation process."
+  },
+  {
+    "controlId": "CYB-007",
+    "domain": "Asset and data management",
+    "controlName": "Asset ownership",
+    "question": "Does each important system and information asset have an accountable owner?",
+    "evidenceReqs": "Asset register with owners; ownership assignments; owner confirmations.",
+    "testProcedure": "Sample important assets and confirm named owners accept accountability.",
+    "passCriteria": "Each important sampled asset has a current, accountable owner."
+  },
+  {
+    "controlId": "CYB-008",
+    "domain": "Asset and data management",
+    "controlName": "Asset lifecycle",
+    "question": "Are assets securely configured before use and securely wiped, returned or disposed of when retired?",
+    "evidenceReqs": "Provisioning checklists; configuration records; wipe certificates; disposal and return logs.",
+    "testProcedure": "Sample newly issued and retired assets and trace required lifecycle steps.",
+    "passCriteria": "Sampled assets meet provisioning requirements and retirement records demonstrate secure handling."
+  },
+  {
+    "controlId": "CYB-009",
+    "domain": "Asset and data management",
+    "controlName": "Data classification",
+    "question": "Is sensitive information identified and handled according to documented requirements?",
+    "evidenceReqs": "Classification policy; data inventory; labels; access and handling rules.",
+    "testProcedure": "Sample sensitive information locations and verify classification and required handling.",
+    "passCriteria": "Sensitive information is identified and sampled handling matches documented requirements."
+  },
+  {
+    "controlId": "CYB-010",
+    "domain": "Asset and data management",
+    "controlName": "Data retention",
+    "question": "Are retention and secure deletion rules defined and applied to organisational data?",
+    "evidenceReqs": "Retention schedule; deletion configurations; deletion logs; legal-hold process.",
+    "testProcedure": "Sample data stores; compare retention settings and deletion evidence with approved rules.",
+    "passCriteria": "Retention and deletion controls operate as defined, with authorised exceptions and holds."
+  },
+  {
+    "controlId": "CYB-011",
+    "domain": "Identity and access management",
+    "controlName": "Unique accounts",
+    "question": "Does each user have a unique account, with shared accounts restricted and justified?",
+    "evidenceReqs": "User account exports; shared-account register; approvals; accountability controls.",
+    "testProcedure": "Sample accounts and reconcile to individuals; inspect shared-account approvals and traceability.",
+    "passCriteria": "Users have unique accounts; shared accounts are justified, restricted and attributable."
+  },
+  {
+    "controlId": "CYB-012",
+    "domain": "Identity and access management",
+    "controlName": "Multi-factor authentication",
+    "question": "Is MFA enforced for remote access, privileged accounts and access to important cloud services and applications?",
+    "evidenceReqs": "Identity-provider policies; MFA coverage reports; application settings; exception register.",
+    "testProcedure": "Check enforcement for each required access path, including bypasses and exclusions; test representative sign-ins.",
+    "passCriteria": "MFA is enforced across required access paths and exceptions are authorised and controlled."
+  },
+  {
+    "controlId": "CYB-013",
+    "domain": "Identity and access management",
+    "controlName": "Joiners, movers and leavers",
+    "question": "Are access rights promptly granted, changed and revoked through an authorised process?",
+    "evidenceReqs": "HR notifications; access requests; approvals; account audit logs; leaver records.",
+    "testProcedure": "Sample joiners, movers and leavers; compare approval and change timestamps with defined targets.",
+    "passCriteria": "Sampled changes are authorised, role-appropriate and completed within documented timeframes."
+  },
+  {
+    "controlId": "CYB-014",
+    "domain": "Identity and access management",
+    "controlName": "Least privilege",
+    "question": "Is access limited to what users and service accounts need for their roles?",
+    "evidenceReqs": "Role definitions; permission exports; access approvals; least-privilege reviews.",
+    "testProcedure": "Sample user and service-account permissions against documented business needs.",
+    "passCriteria": "Sampled access is justified by role and unnecessary permissions are removed or formally excepted."
+  },
+  {
+    "controlId": "CYB-015",
+    "domain": "Identity and access management",
+    "controlName": "Access reviews",
+    "question": "Do system owners periodically review access rights and remove unnecessary or inappropriate access?",
+    "evidenceReqs": "Access certification records; owner sign-offs; removal tickets; review schedule.",
+    "testProcedure": "Sample important systems and trace identified access issues to removal.",
+    "passCriteria": "Reviews occur at the defined frequency and inappropriate access is corrected within agreed targets."
+  },
+  {
+    "controlId": "CYB-016",
+    "domain": "Authentication and privileged access",
+    "controlName": "Password controls",
+    "question": "Are passwords protected by an appropriate policy, including screening for commonly compromised passwords where supported?",
+    "evidenceReqs": "Authentication policy; identity settings; compromised-password screening configuration; exceptions.",
+    "testProcedure": "Inspect settings across authentication systems against policy; test screening safely where supported.",
+    "passCriteria": "Settings meet approved requirements and supported compromised-password screening is enabled or an approved exception exists."
+  },
+  {
+    "controlId": "CYB-017",
+    "domain": "Authentication and privileged access",
+    "controlName": "Privileged accounts",
+    "question": "Are administrative accounts separate from standard user accounts and used only for administrative tasks?",
+    "evidenceReqs": "Privileged-account inventory; directory group exports; admin-use policy; activity logs.",
+    "testProcedure": "Sample administrators and inspect separation of accounts and representative usage.",
+    "passCriteria": "Administrative access uses separate accounts and sampled activity is limited to authorised administrative use."
+  },
+  {
+    "controlId": "CYB-018",
+    "domain": "Authentication and privileged access",
+    "controlName": "Privileged activity",
+    "question": "Is privileged access logged and subject to periodic review?",
+    "evidenceReqs": "Administrative audit logs; monitoring rules; review records; investigation tickets.",
+    "testProcedure": "Generate or trace a safe representative administrative event and inspect periodic review evidence.",
+    "passCriteria": "Relevant privileged activity is captured and reviewed at the defined frequency; exceptions are investigated."
+  },
+  {
+    "controlId": "CYB-019",
+    "domain": "Authentication and privileged access",
+    "controlName": "Service accounts",
+    "question": "Are service accounts inventoried, assigned owners, given only necessary permissions and managed throughout their lifecycle?",
+    "evidenceReqs": "Service-account register; ownership; permissions; lifecycle and credential-review records.",
+    "testProcedure": "Sample service accounts and verify ownership, business need, privileges and lifecycle controls.",
+    "passCriteria": "Sampled accounts have owners, justified permissions and operating lifecycle controls."
+  },
+  {
+    "controlId": "CYB-020",
+    "domain": "Authentication and privileged access",
+    "controlName": "Secrets management",
+    "question": "Are credentials, API keys and other secrets stored securely, restricted to authorised users and rotated when compromised or otherwise required?",
+    "evidenceReqs": "Secrets-vault settings; access logs; secret-scanning findings; rotation records.",
+    "testProcedure": "Sample secret storage and access; review exposed-secret remediation and required rotations.",
+    "passCriteria": "Secrets are securely stored with restricted access; exposed or otherwise due secrets are rotated as required."
+  },
+  {
+    "controlId": "CYB-021",
+    "domain": "Device and system security",
+    "controlName": "Secure configurations",
+    "question": "Are documented security configuration baselines applied to devices, servers, network equipment and cloud environments?",
+    "evidenceReqs": "Approved baselines; configuration compliance reports; deployment records; exceptions.",
+    "testProcedure": "Sample each relevant technology type and compare configuration with its approved baseline.",
+    "passCriteria": "Sampled systems meet baseline requirements or have current authorised exceptions."
+  },
+  {
+    "controlId": "CYB-022",
+    "domain": "Device and system security",
+    "controlName": "Endpoint protection",
+    "question": "Is centrally managed anti-malware or endpoint detection protection deployed on supported devices, with alerts monitored?",
+    "evidenceReqs": "Protection-console inventory; coverage and health reports; alerts; investigation tickets.",
+    "testProcedure": "Reconcile supported devices to active protection; review representative alerts and response records.",
+    "passCriteria": "Supported in-scope devices have healthy managed protection and alerts receive documented triage."
+  },
+  {
+    "controlId": "CYB-023",
+    "domain": "Device and system security",
+    "controlName": "Device encryption",
+    "question": "Are laptops and other portable devices containing organisational data encrypted?",
+    "evidenceReqs": "Device encryption reports; endpoint inventory; recovery-key access controls; exceptions.",
+    "testProcedure": "Reconcile portable devices against encryption status and inspect recovery-key protection.",
+    "passCriteria": "Required devices are encrypted and recovery keys are access-controlled; exceptions are authorised."
+  },
+  {
+    "controlId": "CYB-024",
+    "domain": "Device and system security",
+    "controlName": "Device locking",
+    "question": "Do devices automatically lock after inactivity and require authentication to unlock?",
+    "evidenceReqs": "Device-lock policy; management settings; configuration compliance reports; test records.",
+    "testProcedure": "Inspect configuration and test representative devices against the approved inactivity threshold.",
+    "passCriteria": "Sampled devices lock within the defined threshold and require authentication to unlock."
+  },
+  {
+    "controlId": "CYB-025",
+    "domain": "Device and system security",
+    "controlName": "Unsupported systems",
+    "question": "Are unsupported systems identified, with upgrades prioritised or documented compensating controls applied?",
+    "evidenceReqs": "Support-lifecycle inventory; vendor lifecycle evidence; upgrade plans; exception and mitigation records.",
+    "testProcedure": "Compare sampled system versions against support status and verify treatment of unsupported systems.",
+    "passCriteria": "Unsupported systems are identified and have owned upgrade plans or authorised, operating compensating controls."
+  },
+  {
+    "controlId": "CYB-026",
+    "domain": "Vulnerability and change management",
+    "controlName": "Security updates",
+    "question": "Are operating systems, applications, firmware and security tools updated within risk-based timeframes?",
+    "evidenceReqs": "Patch policy; update compliance reports; deployment logs; exceptions.",
+    "testProcedure": "Sample updates across technology types and compare deployment timing with risk-based targets.",
+    "passCriteria": "Updates meet approved timeframes or have authorised exceptions and compensating controls."
+  },
+  {
+    "controlId": "CYB-027",
+    "domain": "Vulnerability and change management",
+    "controlName": "Vulnerability scanning",
+    "question": "Are systems regularly scanned for vulnerabilities, with coverage and results reviewed?",
+    "evidenceReqs": "Scan schedule; scope; authenticated-scan status; results; coverage reconciliation.",
+    "testProcedure": "Reconcile scan scope to assets; inspect scan completion, authentication where appropriate and review records.",
+    "passCriteria": "Scanning covers in-scope systems at the defined frequency and results are reviewed."
+  },
+  {
+    "controlId": "CYB-028",
+    "domain": "Vulnerability and change management",
+    "controlName": "Remediation tracking",
+    "question": "Are vulnerabilities prioritised, assigned owners and tracked through to verified remediation?",
+    "evidenceReqs": "Vulnerability register; prioritisation rules; tickets; rescans; exception approvals.",
+    "testProcedure": "Sample findings across severity levels and trace ownership, deadlines and closure verification.",
+    "passCriteria": "Findings are prioritised and owned; closure is verified and overdue items are escalated or formally excepted."
+  },
+  {
+    "controlId": "CYB-029",
+    "domain": "Vulnerability and change management",
+    "controlName": "Change control",
+    "question": "Are significant changes assessed, authorised, tested and documented before implementation?",
+    "evidenceReqs": "Change policy; change tickets; risk assessments; approvals; tests; emergency-change reviews.",
+    "testProcedure": "Sample normal and emergency changes and verify the applicable approval and testing process.",
+    "passCriteria": "Significant changes follow the approved process; emergency changes receive required retrospective review."
+  },
+  {
+    "controlId": "CYB-030",
+    "domain": "Vulnerability and change management",
+    "controlName": "Configuration monitoring",
+    "question": "Are unauthorised or unexpected changes to important system configurations detected and investigated?",
+    "evidenceReqs": "Configuration monitoring settings; change alerts; approved change records; investigations.",
+    "testProcedure": "Trace representative configuration changes to detection and reconciliation with authorised changes.",
+    "passCriteria": "Unexpected changes to important configurations are detected and investigated under defined procedures."
+  },
+  {
+    "controlId": "CYB-031",
+    "domain": "Network and cloud security",
+    "controlName": "Network boundaries",
+    "question": "Are firewalls or equivalent controls used to restrict traffic to and from organisational systems?",
+    "evidenceReqs": "Network diagrams; firewall rules; rule approvals; review records.",
+    "testProcedure": "Review representative boundary rules against business need and inspect required rule reviews.",
+    "passCriteria": "Boundary traffic is restricted to authorised flows and rules are maintained and reviewed."
+  },
+  {
+    "controlId": "CYB-032",
+    "domain": "Network and cloud security",
+    "controlName": "Network segmentation",
+    "question": "Are sensitive or critical systems separated from less trusted networks according to risk?",
+    "evidenceReqs": "Segmentation design; firewall and access rules; risk assessment; connectivity test results.",
+    "testProcedure": "Review trust boundaries and safely test representative permitted and prohibited connections.",
+    "passCriteria": "Segmentation matches the approved risk-based design and prohibited paths are blocked."
+  },
+  {
+    "controlId": "CYB-033",
+    "domain": "Network and cloud security",
+    "controlName": "Remote access",
+    "question": "Is remote access secured, authenticated and limited to authorised users and services?",
+    "evidenceReqs": "Remote-access inventory; access policies; authentication settings; session logs; reviews.",
+    "testProcedure": "Inspect approved remote-access paths, including supplier access, and sample access authorisations.",
+    "passCriteria": "Remote access uses approved secure methods, authenticates users and restricts access to authorised resources."
+  },
+  {
+    "controlId": "CYB-034",
+    "domain": "Network and cloud security",
+    "controlName": "Cloud configuration",
+    "question": "Are cloud environments regularly reviewed for insecure settings, excessive permissions and unintended public exposure?",
+    "evidenceReqs": "Cloud configuration reports; identity reviews; public-exposure reports; remediation tickets.",
+    "testProcedure": "Sample cloud environments and review identified exposures, excessive permissions and corrective actions.",
+    "passCriteria": "Reviews cover in-scope cloud environments and material issues are tracked and addressed within defined targets."
+  },
+  {
+    "controlId": "CYB-035",
+    "domain": "Network and cloud security",
+    "controlName": "Network services",
+    "question": "Are unnecessary ports, protocols and services disabled or restricted?",
+    "evidenceReqs": "Service inventory; port scans; configuration standards; approved service justifications.",
+    "testProcedure": "Compare discovered services with approved requirements and investigate unexpected exposure.",
+    "passCriteria": "Exposed services have documented business need; unnecessary services are disabled or restricted."
+  },
+  {
+    "controlId": "CYB-036",
+    "domain": "Data protection and resilience",
+    "controlName": "Encryption in transit",
+    "question": "Is sensitive information protected in transit using appropriate encryption?",
+    "evidenceReqs": "Data-flow inventory; transport-encryption settings; certificate inventory; configuration test results.",
+    "testProcedure": "Sample sensitive data flows and inspect encryption protocols and certificate validation.",
+    "passCriteria": "Sampled sensitive flows use approved encryption and valid certificate controls where applicable."
+  },
+  {
+    "controlId": "CYB-037",
+    "domain": "Data protection and resilience",
+    "controlName": "Encryption at rest",
+    "question": "Is sensitive information encrypted at rest where required by risk, policy or contractual obligations?",
+    "evidenceReqs": "Data classification; encryption settings; key-management controls; contractual requirements.",
+    "testProcedure": "Sample stores requiring encryption and verify encryption and key access restrictions.",
+    "passCriteria": "Required stores are encrypted and encryption keys are appropriately restricted and managed."
+  },
+  {
+    "controlId": "CYB-038",
+    "domain": "Data protection and resilience",
+    "controlName": "Backup coverage",
+    "question": "Are critical systems and data backed up according to documented recovery requirements?",
+    "evidenceReqs": "Critical-system inventory; recovery objectives; backup schedules; job logs; failure tickets.",
+    "testProcedure": "Reconcile critical systems to backup coverage and compare schedules and successful jobs with recovery requirements.",
+    "passCriteria": "Critical systems have successful backups meeting defined requirements, with failures resolved or escalated."
+  },
+  {
+    "controlId": "CYB-039",
+    "domain": "Data protection and resilience",
+    "controlName": "Backup protection",
+    "question": "Are backups protected against unauthorised alteration or deletion, including separation from normal administrative access?",
+    "evidenceReqs": "Backup access roles; immutability or offline settings; deletion protection; audit logs.",
+    "testProcedure": "Inspect administrative separation and safely validate configured deletion and alteration protections.",
+    "passCriteria": "Backups have operating protections against unauthorised alteration and deletion, with separated administrative access."
+  },
+  {
+    "controlId": "CYB-040",
+    "domain": "Data protection and resilience",
+    "controlName": "Recovery testing",
+    "question": "Are backups periodically restored and tested to verify that critical data and services can be recovered?",
+    "evidenceReqs": "Restore-test schedule; test reports; recovered-data checks; actual recovery times; corrective actions.",
+    "testProcedure": "Inspect representative restore tests and compare outcomes with defined recovery objectives.",
+    "passCriteria": "Tests demonstrate usable recovery against defined objectives; failed objectives have tracked corrective actions."
+  },
+  {
+    "controlId": "CYB-041",
+    "domain": "Monitoring and incident response",
+    "controlName": "Security logging",
+    "question": "Are relevant security events recorded for critical systems, including authentication and administrative activity?",
+    "evidenceReqs": "Logging standard; critical-system log-source inventory; event samples; collection-health reports.",
+    "testProcedure": "Reconcile critical systems to log sources and trace representative authentication and administrative events.",
+    "passCriteria": "Required events from critical systems are captured with sufficient context and monitored for collection failures."
+  },
+  {
+    "controlId": "CYB-042",
+    "domain": "Monitoring and incident response",
+    "controlName": "Log protection",
+    "question": "Are logs protected from unauthorised modification or deletion and retained according to documented requirements?",
+    "evidenceReqs": "Log access permissions; retention settings; storage protections; audit trails.",
+    "testProcedure": "Inspect modification and deletion rights; sample retained logs against the required period.",
+    "passCriteria": "Logs are restricted against unauthorised changes and available for the defined retention period."
+  },
+  {
+    "controlId": "CYB-043",
+    "domain": "Monitoring and incident response",
+    "controlName": "Alert response",
+    "question": "Are security alerts monitored, triaged and escalated to an assigned person or team?",
+    "evidenceReqs": "Alert catalogue; duty roster; response procedures; case records; escalation timestamps.",
+    "testProcedure": "Sample alerts and trace assignment, triage, escalation and closure against documented targets.",
+    "passCriteria": "Alerts have accountable coverage and sampled cases follow the defined response and escalation process."
+  },
+  {
+    "controlId": "CYB-044",
+    "domain": "Monitoring and incident response",
+    "controlName": "Incident response plan",
+    "question": "Is there a documented incident response plan covering reporting, containment, recovery, communications and responsibilities?",
+    "evidenceReqs": "Approved incident response plan; contact lists; reporting procedures; review history.",
+    "testProcedure": "Review completeness, current responsibilities and accessibility to responders.",
+    "passCriteria": "A current approved plan covers all required stages, contacts and responsibilities and is accessible to responders."
+  },
+  {
+    "controlId": "CYB-045",
+    "domain": "Monitoring and incident response",
+    "controlName": "Incident exercises",
+    "question": "Is the incident response plan tested periodically, with lessons learned tracked to completion?",
+    "evidenceReqs": "Exercise schedule; scenarios; attendance; exercise reports; improvement-action register.",
+    "testProcedure": "Inspect exercise records and trace lessons learned to assigned actions and closure evidence.",
+    "passCriteria": "Exercises occur at the defined frequency and improvement actions are owned and tracked to closure."
+  },
+  {
+    "controlId": "CYB-046",
+    "domain": "People, suppliers and assurance",
+    "controlName": "Security awareness",
+    "question": "Do personnel receive security awareness training at onboarding and periodically thereafter?",
+    "evidenceReqs": "Training content; personnel roster; onboarding records; completion reports; follow-up records.",
+    "testProcedure": "Reconcile relevant personnel to training completion and check onboarding and refresher deadlines.",
+    "passCriteria": "Relevant personnel complete required training within defined timeframes and overdue completion is followed up."
+  },
+  {
+    "controlId": "CYB-047",
+    "domain": "People, suppliers and assurance",
+    "controlName": "Phishing reporting",
+    "question": "Can personnel easily report suspicious messages, and are those reports reviewed and acted upon?",
+    "evidenceReqs": "Reporting instructions or button; awareness materials; reported-message queue; response records.",
+    "testProcedure": "Test the reporting route and sample submitted reports for triage and appropriate action.",
+    "passCriteria": "An accessible reporting route operates and submitted reports receive review and appropriate action."
+  },
+  {
+    "controlId": "CYB-048",
+    "domain": "People, suppliers and assurance",
+    "controlName": "Supplier assessment",
+    "question": "Are suppliers assessed for security risk before engagement and reviewed periodically according to the risk they present?",
+    "evidenceReqs": "Supplier inventory; risk tiers; due-diligence assessments; approvals; reassessment schedule.",
+    "testProcedure": "Sample higher-risk and other relevant suppliers for pre-engagement assessment and required reassessment.",
+    "passCriteria": "Suppliers receive documented, risk-proportionate assessment before engagement and at defined review intervals."
+  },
+  {
+    "controlId": "CYB-049",
+    "domain": "People, suppliers and assurance",
+    "controlName": "Supplier access",
+    "question": "Is third-party access authorised, limited, monitored and removed when no longer needed?",
+    "evidenceReqs": "Supplier-account register; approvals; access scopes; session logs; contract-end and removal records.",
+    "testProcedure": "Sample active and ended supplier engagements and verify access approval, scope, monitoring and removal.",
+    "passCriteria": "Third-party access is justified, restricted and monitored; unnecessary access is promptly removed under defined targets."
+  },
+  {
+    "controlId": "CYB-050",
+    "domain": "People, suppliers and assurance",
+    "controlName": "Control assurance",
+    "question": "Are security controls periodically tested independently of their day-to-day operation, with findings assigned owners and tracked to closure?",
+    "evidenceReqs": "Assurance plan; assessor responsibilities; test reports; findings register; closure validation.",
+    "testProcedure": "Verify testing coverage and assessor independence from operation; sample findings through validated closure.",
+    "passCriteria": "Risk-based assurance testing is performed independently of daily control operation and findings are owned and tracked to validated closure."
+  }
+]

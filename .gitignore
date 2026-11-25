@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+node_modules/
+.next/
+.build/
+.yarn/
+*.log
+*.tsbuildinfo
+*.zip
+*.tgz
+*.pem
+*.key
+backups/

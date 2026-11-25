@@ -1,0 +1,52 @@
+x-app-environment: &app-environment
+  DATABASE_URL: postgresql://cyberassurance:${DB_PASSWORD:?Set DB_PASSWORD in .env}@db:5432/cyberassurance
+  NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:?Set NEXTAUTH_SECRET in .env}
+  AUTH_SECRET: ${NEXTAUTH_SECRET:?Set NEXTAUTH_SECRET in .env}
+  NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+  AUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+  AUTH_TRUST_HOST: "true"
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: cyberassurance
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      POSTGRES_DB: cyberassurance
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cyberassurance -d cyberassurance"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  init:
+    profiles: ["setup"]
+    build:
+      context: .
+      target: init
+    environment:
+      <<: *app-environment
+      PORTABLE_INIT: "1"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  app:
+    build:
+      context: .
+      target: runner
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - '127.0.0.1:3000:3000'
+    environment:
+      <<: *app-environment
+
+volumes:
+  pgdata:

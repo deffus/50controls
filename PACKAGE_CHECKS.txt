@@ -1,0 +1,19 @@
+Verification scope
+PASS: Generated-client relocation exercised using the real generated client and isolated dependency directory; models imported without connecting to a database.
+PASS: Schema preserved byte-for-byte in staging test; managed generator not edited.
+PASS: Initialization guard accepted local db service and rejected external database addresses and absent explicit opt-in.
+PASS: Compose configuration parsed with placeholder variables.
+PASS: Application type check, build, server startup and basic authentication checks.
+PASS: Checkpoint build saved after packaging edits.
+PASS: ZIP integrity, essential-file checks and configured-secret scan.
+NOT RUN: Docker image build/start, Apple Silicon container behavior, actual initialization against a new local database, email delivery or a production security audit. Docker daemon unavailable in packaging workspace.
+No hosted database initialization, data migration or schema changes were run. Standard application tests exercised authentication.
+This archive is intended for local evaluation. Follow README.md, retain your existing .env/database volume, and do not expose it externally.
+
+User-management update verification:
+PASS: app type-check, production build and saved checkpoint.
+PASS: Browser form creation, persistence on reload, profile/role editing, password reset, rejected old password and login with new password.
+PASS: Live permission changes for an already-signed-in user, Viewer create/edit/review restrictions and admin-page redirect, unauthenticated create rejection, invalid-role and duplicate-email validation, self-demotion protection, reset confirmation, session invalidation and client role-elevation rejection.
+PASS: Updated source entries match the saved files; ZIP integrity and configured-secret exclusion checked.
+NOT RUN: Docker build/runtime on the user's Mac. This download is not automatically installed on the Mac.
+No schema changes or initialization are needed for this update. Retain existing .env, folder/project name and database volume; rebuild and restart only the app. Existing sessions require a fresh sign-in.
