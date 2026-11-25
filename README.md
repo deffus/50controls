@@ -19,8 +19,8 @@ A portable web application for managing a 50-control cybersecurity baseline assu
 
 ```bash
 # 1. Clone the repository
-git clone <your-repo-url> cyber-assurance
-cd cyber-assurance
+git clone https://github.com/deffus/50controls.git
+cd 50controls
 
 # 2. Copy and edit environment variables
 cp .env.example .env
