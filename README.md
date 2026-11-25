@@ -114,3 +114,4 @@ Due to credit allocation, all I managed at this time is to assess the app, fixes
 Please not, the app designed as a helper utility to run internally and NOT to be exposed publicly.
 you can read the findings here [a link] (https://github.com/deffus/50controls/blob/main/OWASP_SECURITY_ASSESSMENT_REPORT.md)
 and follow the steps to make things better using the guide here [a link] (https://github.com/deffus/50controls/blob/main/Cyber_Assurance_Manual_Security_Remediation_Guide.md)
+```
