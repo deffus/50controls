@@ -24,8 +24,8 @@ cd 50controls
 
 # 2. Copy and edit environment variables
 cp .env.example .env
-# Edit .env — at minimum set NEXTAUTH_SECRET to a random string:
-#   openssl rand -base64 32
+# Edit .env — at minimum set NEXTAUTH_SECRET to a random string.
+# this is where you set the DB password 
 
 # 3. Validate the configuration without displaying its secrets:
 docker compose config --quiet
