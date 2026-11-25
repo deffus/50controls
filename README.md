@@ -107,3 +107,10 @@ yarn dev
 ## Daily Reminders
 
 Call `POST /api/reminders` daily (e.g. via cron, or a scheduled task) to generate in-app notifications and send email reminders for overdue and due-soon actions.
+
+## Testing report and actions to be taken
+```
+Due to credit allocation, all I managed at this time is to assess the app, fixes not implimented yet, but the report and actions are here should you like to explore this further.
+Please not, the app designed as a helper utility to run internally and NOT to be exposed publicly.
+you can read the findings here [a link] (https://github.com/deffus/50controls/blob/main/OWASP_SECURITY_ASSESSMENT_REPORT.md)
+and follow the steps to make things better using the guide here [a link] (https://github.com/deffus/50controls/blob/main/Cyber_Assurance_Manual_Security_Remediation_Guide.md)
