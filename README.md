@@ -89,7 +89,7 @@ yarn prisma db seed
 # 4. Start the dev server
 yarn dev
 ```
-
+[image](50controls_dash.png)
 
 ## Scoring Model
 
