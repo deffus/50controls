@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { auth } from '@/auth';
 import { STATE_LABELS } from '@/lib/scoring';
+import { csvCell } from '@/lib/csv';
 
 export async function GET(request: Request) {
   const session = await auth();
@@ -44,12 +45,13 @@ export async function GET(request: Request) {
   ]);
 
   const csv = [headers, ...rows]
-    .map((row: any[]) => row.map((cell: any) => `"${String(cell ?? '').replace(/"/g, '""')}"`).join(','))
-    .join('\n');
+    .map((row: unknown[]) => row.map(csvCell).join(','))
+    .join('\r\n');
 
   return new Response(csv, {
     headers: {
-      'Content-Type': 'text/csv',
+      'Content-Type': 'text/csv; charset=utf-8',
+      'Cache-Control': 'private, no-store',
       'Content-Disposition': `attachment; filename="${review.name?.replace(/[^a-zA-Z0-9]/g, '_') ?? 'review'}_export.csv"`,
     },
   });
