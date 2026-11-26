@@ -2,6 +2,8 @@ export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { auth } from '@/auth';
+import { reviewPatchSchema } from '@/lib/assurance-validation';
+import { mutationError } from '@/lib/mutation-error';
 
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
@@ -29,11 +31,20 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   const user = session.user as any;
-  if (user.role === 'VIEWER') return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
+  if (!['ADMIN', 'ASSESSOR'].includes(user.role)) {
+    return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
+  }
+  const parsed = reviewPatchSchema.safeParse(await request.json().catch(() => null));
+  if (!parsed.success) {
+    return NextResponse.json({ error: 'Invalid review changes' }, { status: 400 });
+  }
   const { id } = await params;
-  const data = await request.json();
-  const review = await prisma.review.update({ where: { id }, data });
-  return NextResponse.json(review);
+  try {
+    const review = await prisma.review.update({ where: { id }, data: parsed.data });
+    return NextResponse.json(review);
+  } catch (error) {
+    return mutationError(error);
+  }
 }
 
 export async function DELETE(_req: Request, { params }: { params: Promise<{ id: string }> }) {

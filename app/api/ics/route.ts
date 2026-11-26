@@ -2,10 +2,7 @@ export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { auth } from '@/auth';
-
-function formatICSDate(date: Date): string {
-  return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-}
+import { escapeIcalText, foldIcalLine } from '@/lib/ical';
 
 export async function GET(request: Request) {
   const session = await auth();
@@ -21,28 +18,39 @@ export async function GET(request: Request) {
     include: { review: { select: { name: true } } },
   });
 
-  const events = (actions ?? []).map((a: any) => {
+  const events: string[] = [];
+  for (const a of actions ?? []) {
     const due = a?.dueDate ? new Date(a.dueDate) : new Date();
     const uid = a?.id ?? 'unknown';
-    return `BEGIN:VEVENT
-UID:${uid}@cyber-assurance
-DTSTART;VALUE=DATE:${due.toISOString().slice(0, 10).replace(/-/g, '')}
-DTEND;VALUE=DATE:${due.toISOString().slice(0, 10).replace(/-/g, '')}
-SUMMARY:Action Due: ${(a?.description ?? '').slice(0, 60)}
-DESCRIPTION:Review: ${a?.review?.name ?? 'Unknown'}\nStatus: ${a?.status ?? 'Unknown'}
-END:VEVENT`;
-  });
+    const dateStr = due.toISOString().slice(0, 10).replace(/-/g, '');
+    const summary = escapeIcalText(`Action Due: ${(a?.description ?? '').slice(0, 60)}`);
+    const description = escapeIcalText(`Review: ${a?.review?.name ?? 'Unknown'}\nStatus: ${a?.status ?? 'Unknown'}`);
 
-  const ics = `BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//Cyber Assurance//Actions//EN
-CALSCALE:GREGORIAN
-${events.join('\n')}
-END:VCALENDAR`;
+    const lines = [
+      'BEGIN:VEVENT',
+      foldIcalLine(`UID:${uid}@cyber-assurance`),
+      `DTSTART;VALUE=DATE:${dateStr}`,
+      `DTEND;VALUE=DATE:${dateStr}`,
+      foldIcalLine(`SUMMARY:${summary}`),
+      foldIcalLine(`DESCRIPTION:${description}`),
+      'END:VEVENT',
+    ];
+    events.push(lines.join('\r\n'));
+  }
+
+  const ics = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Cyber Assurance//Actions//EN',
+    'CALSCALE:GREGORIAN',
+    ...events,
+    'END:VCALENDAR',
+  ].join('\r\n');
 
   return new Response(ics, {
     headers: {
-      'Content-Type': 'text/calendar',
+      'Content-Type': 'text/calendar; charset=utf-8',
+      'Cache-Control': 'private, no-store',
       'Content-Disposition': 'attachment; filename="actions.ics"',
     },
   });
