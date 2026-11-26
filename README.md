@@ -89,7 +89,7 @@ yarn prisma db seed
 # 4. Start the dev server
 yarn dev
 ```
-[image](50controls_dash.png)
+<img width="1587" height="955" alt="50controls_dash" src="https://github.com/user-attachments/assets/8b860cc9-c090-4d86-bd4e-ab68fff82a6a" />
 
 ## Scoring Model
 
